@@ -133,10 +133,30 @@ html, body {
     transition: width 0.3s ease;
 }
 
-/* Main Content */
+/* -------Main Content ------*/
 #main_cont_with_filter {
     background-color: #0f0f0f;
-    padding: 20px;
+    padding: 10px;
+}
+#filter{
+    height: 35px;
+    width: 100%;
+    margin-bottom: 5px;
+}
+.filter-btn{
+    background: #222;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    margin-right: 3px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+   
+}
+.filter-btn:hover, .filter-btn.active {
+    background: #fff;
+    color: #000;
 }
 
 /* Sidebar Shrink Effect */
