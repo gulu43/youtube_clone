@@ -19,24 +19,55 @@ leftMenuBtn.addEventListener('click', () => {
 
 
 
+let videoCardContainer = document.getElementById("main_body_container");
 
-const videoCardContainer = document.getElementById("main_body_container");
-const video_https = "https://www.googleapis.com/youtube/v3/videos?";
-const numberOfVideosOnIntialLoad = 20;
+async function fetchData(params) {
+    let all_videos_data_arry = [];
+    let video_https = "https://www.googleapis.com/youtube/v3/videos?";
+    let numberOfVideosOnIntialLoad = 10;
 
-const generateQueryParam = new URLSearchParams({
-    key: YOUR_API_KEY,
-    part: "snippet, contentDetails",
-    chart: "mostPopular",
-    maxResults: numberOfVideosOnIntialLoad,
-    regionCode: "IN",
-});
+    let generateQueryParam = new URLSearchParams({
+        key: YOUR_API_KEY,
+        part: "snippet, statistics, contentDetails",
+        chart: "mostPopular",
+        maxResults: numberOfVideosOnIntialLoad,
+        regionCode: "IN",
+    });
 
+    try {
+        let videos_link = await fetch(video_https + generateQueryParam);
+        let data = await videos_link.json();
 
+        data.items.forEach(video_all_data => {
+            let video_data_obj = {
+                'id': video_all_data.id,
+                'title': video_all_data.snippet.localized?.title || video.snippet.title,
+                'channelTitle': video_all_data.snippet.channelTitle,
+                'thumbnails': video_all_data.snippet.thumbnails.medium.url,
+                'viewCount': video_all_data.statistics?.viewCount || "N/A",
+                'publishedAt': video_all_data.snippet.publishedAt,
+                'channelId': video_all_data.snippet.channelId, // Channel ID for fetching logo   
+                'channelLogo': "N/A"
+            };
+            all_videos_data_arry.push(video_data_obj);
+        });
+        return all_videos_data_arry;
 
-// console.log(video_https+generateQueryParam);
+    } catch (error) {
+        throw new Error("error: fetching", error);
+    }
+}
 
-fetch(video_https + generateQueryParam)
-    .then((res) => res.json())
-    .then((data) => console.log(data))
-    .catch((err) => console.log(err));
+fetchData().then((vData) => {
+    vData.forEach((e) => {
+        console.log(e);
+    })
+})
+
+// Video ID: var_name.items.[i].id
+// Video Title: var_name.items.[i].snippet.localized.title
+// Channel Title: var_name.items.[i].snippet.channelTitle
+// Thumbnail URL: var_name.items.[i].snippet.thumbnails.medium/standard
+// View Count: var_name.items.[i].statistices.viewCount
+// Published At (or Published Time): var_name.items.[i].snippet.publishedAt
+// Channel Logo URL:
