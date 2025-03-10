@@ -1,4 +1,4 @@
-import { YOUR_API_KEY } from "./API_CONSTANTS.js";
+import YOUR_API_KEY from "./API_CONSTANTS.js";
 
 
 // Get elements
@@ -25,11 +25,11 @@ const video_https = "https://www.googleapis.com/youtube/v3/videos?";
 const numberOfVideosOnIntialLoad = 20;
 
 const generateQueryParam = new URLSearchParams({
-  key: YOUR_API_KEY,
-  part: "snippet, contentDetails",
-  chart: "mostPopular",
-  maxResults: numberOfVideosOnIntialLoad,
-  regionCode: "IN",
+    key: YOUR_API_KEY,
+    part: "snippet, contentDetails",
+    chart: "mostPopular",
+    maxResults: numberOfVideosOnIntialLoad,
+    regionCode: "IN",
 });
 
 
@@ -37,6 +37,6 @@ const generateQueryParam = new URLSearchParams({
 // console.log(video_https+generateQueryParam);
 
 fetch(video_https + generateQueryParam)
-  .then((res) => res.json())
-  .then((data) => console.log(data))
-  .catch((err) => console.log(err));
+    .then((res) => res.json())
+    .then((data) => console.log(data))
+    .catch((err) => console.log(err));
