@@ -1,4 +1,4 @@
-import { YOUR_API_KEY } from "./API_CONSTANTS";
+import { YOUR_API_KEY } from "./API_CONSTANTS.js";
 
 
 // Get elements
@@ -34,9 +34,9 @@ const generateQueryParam = new URLSearchParams({
 
 
 
-console.log(video_https+generateQueryParam);
+// console.log(video_https+generateQueryParam);
 
-// fetch(video_https + generateQueryParam)
-//   .then((res) => res.json())
-//   .then((data) => console.log(data))
-//   .catch((err) => console.log(err));
+fetch(video_https + generateQueryParam)
+  .then((res) => res.json())
+  .then((data) => console.log(data))
+  .catch((err) => console.log(err));
