@@ -54,10 +54,10 @@ async function fetchData(params) {
         throw new Error("error: fetching", error);
     }
 }
+let videoCardContainer = document.getElementById("main_body_container");
 
 fetchData().then((vData) => {
     // dom
-    let videoCardContainer = document.getElementById("main_body_container");
     let numberOfRows = Math.ceil(length_roe_and_videous / 3);
     videoCardContainer.style.gridTemplateRows = `repeat(${numberOfRows}, ${360}px)`;
 
@@ -68,6 +68,7 @@ fetchData().then((vData) => {
         videoCard.classList.add("video_card");
 
         videoCard.innerHTML = `
+            <div class="video_id">${e.id}</div>
             <div class="video_thumbnail_div"><img class="video_thumbnail" src="${e.thumbnails}" alt="Thumbnail"></div>
             <div class="video_title">${e.title}</div>
             <div class="video_channel">${e.channelTitle}</div>
@@ -78,6 +79,18 @@ fetchData().then((vData) => {
         videoCardContainer.appendChild(videoCard);
     });
 })
+// link fun
+function link(e){
+    let videoCard = e.target.closest(".video_card");
+    
+    if (videoCard) {
+        let videoId = videoCard.querySelector(".video_id").innerText;
+        console.log("Clicked Video ID:", videoId);
+    }
+}
+
+// videoCardContainer.addEventListener('hover', link);
+videoCardContainer.addEventListener('click', link);
 
 
 
